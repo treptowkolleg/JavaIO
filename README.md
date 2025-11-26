@@ -14,14 +14,14 @@
 ## Hilfsklassen verwenden
 ### Setup
 
-Um bequem auf nützliche Helfer zugreifen zu können, erben wir von ``AbstractApplication``.
+Um bequem auf nützliche Helfer zugreifen zu können, erben wir von ``IOApplication``.
 
 ````java
 package pr1.a04;
 
-import pr1.helper.core.AbstractApplication;
+import treptowkolleg.core.IOApplication;
 
-public class Demo extends AbstractApplication {
+public class Demo extends IOApplication {
     public static void main(String[] args) {
         // neue Instanz dieser Klasse erzeugen.
         new Demo();
@@ -29,15 +29,15 @@ public class Demo extends AbstractApplication {
 }
 ````
 
-In der IDE werden wir zunächst einen Fehler angezeigt bekommen, denn die Oberklasse ``AbstractApplication`` verlangt,
+In der IDE werden wir zunächst einen Fehler angezeigt bekommen, denn die Oberklasse ``IOApplication`` verlangt,
 dass wir die Methode ``public void run()`` implementieren. Das tun wir also:
 
 ````java
 package pr1.a04;
 
-import pr1.helper.core.AbstractApplication;
+import treptowkolleg.core.IOApplication;
 
-public class Demo extends AbstractApplication {
+public class Demo extends IOApplication {
     public static void main(String[] args) {
         // neue Instanz dieser Klasse erzeugen.
         new Demo();
@@ -50,7 +50,7 @@ public class Demo extends AbstractApplication {
 }
 ````
 
-In dieser Methode führen wir nun unsere Anweisungen aus. ``AbstractApplication`` sorgt dafür, dass diese
+In dieser Methode führen wir nun unsere Anweisungen aus. ``IOApplication`` sorgt dafür, dass diese
 Methode automatisch ausgeführt wird, sobald wir eine Instanz unserer Klasse mit ``new`` erzeugt haben.
 
 Wir können nun auf hilfreiche Methoden der Oberklasse zugreifen.
@@ -126,7 +126,7 @@ Diese Klasse hat den vollqualifizierten Namen ``pr1.a04.Demo``. Die neue Datei l
 ``./data/a04/demo.txt``.
 
 ````java
-import pr1.helper.core.FileTarget;
+import treptowkolleg.filesystem.FileTarget;
 
 // ...
 
@@ -176,8 +176,8 @@ Wir haben folgenden Dateiinhalt:
 ````
 
 ```java
-import pr1.helper.core.Delimiter;
-import pr1.helper.core.MatchPattern;
+import treptowkolleg.filter.Delimiter;
+import treptowkolleg.filter.Pattern;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -202,14 +202,14 @@ public void run() {
     // oder alternativ:
     withFileScanner(scanner -> {
         Stream<String> stream = scanner.useDelimiter(Delimiter.WHITESPACE_OR_COMMA.getPattern()).tokens();
-        Stream<String> filteredStream = stream.filter(s -> s.matches(MatchPattern.INTEGER.getRegex()));
+        Stream<String> filteredStream = stream.filter(s -> s.matches(Pattern.INTEGER.getRegex()));
         IntStream intStream = filteredStream.mapToInt(Integer::parseInt);
         intStream.forEach(i -> printf("Zahl %d gefunden.%n", i));
     });
     
     // und kürzer:
     withFileScanner(scanner -> scanner.useDelimiter(Delimiter.WHITESPACE_OR_COMMA.getPattern()).tokens()
-            .filter(s -> s.matches(MatchPattern.INTEGER.getRegex())).mapToInt(Integer::parseInt).forEach(
+            .filter(s -> s.matches(Pattern.INTEGER.getRegex())).mapToInt(Integer::parseInt).forEach(
                     element -> printf("Zahl %d gefunden.%n", element))
     );
 }
