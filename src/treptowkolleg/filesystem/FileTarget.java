@@ -16,13 +16,15 @@
  */
 package treptowkolleg.filesystem;
 
+import java.io.File;
+
 public enum FileTarget {
 	PROJECT_DIR	("."),
 	DATA_DIR	("./data"),
 	USER_DIR	(System.getProperty("user.home"));
 
 	private final String baseDir;
-	private final char separator = java.io.File.separatorChar;
+	private final char separator = File.separatorChar;
     
 	FileTarget(String property) {
 		baseDir = property;
