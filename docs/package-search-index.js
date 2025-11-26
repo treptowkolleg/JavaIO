@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"treptowkolleg.core"},{"l":"treptowkolleg.extension"},{"l":"treptowkolleg.filesystem"},{"l":"treptowkolleg.filter"}]
