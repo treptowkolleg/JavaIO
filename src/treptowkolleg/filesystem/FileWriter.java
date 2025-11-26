@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package treptowkolleg.core;
+package treptowkolleg.filesystem;
+
+import treptowkolleg.core.IOApplication;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,7 +32,7 @@ import java.nio.file.FileSystems;
  * subdirectories are created automatically.
  * </p>
  * <p>
- * Typical usage is through {@link treptowkolleg.core.AbstractApplication}, which
+ * Typical usage is through {@link IOApplication}, which
  * provides higher-level lifecycle and error management for file output streams.
  * </p>
  *
@@ -38,7 +40,7 @@ import java.nio.file.FileSystems;
  * @version 1.0
  * @see FileTarget
  * @see PrintWriter
- * @see AbstractApplication
+ * @see IOApplication
  * @since 2025
  */
 public class FileWriter {

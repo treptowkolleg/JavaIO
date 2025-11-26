@@ -17,6 +17,9 @@
 package treptowkolleg.core;
 
 import treptowkolleg.extension.PrintDecorator;
+import treptowkolleg.filesystem.FileReader;
+import treptowkolleg.filesystem.FileTarget;
+import treptowkolleg.filesystem.FileWriter;
 
 import java.io.PrintWriter;
 import java.util.Locale;
@@ -49,7 +52,7 @@ import java.util.function.Consumer;
  * @see PrintWriter
  * @since 2025
  */
-public abstract class AbstractApplication {
+public abstract class IOApplication {
     private FileReader fileReader;
     private FileWriter fileWriter;
     private Scanner scanner;
@@ -62,7 +65,7 @@ public abstract class AbstractApplication {
      * Initializes the default locale ({@link Locale#US}), calls {@link #run()},
      * and ensures all open resources are closed afterward.
      */
-    public AbstractApplication() {
+    public IOApplication() {
         Locale.setDefault(Locale.US);
         try {
             run();
@@ -85,7 +88,7 @@ public abstract class AbstractApplication {
      * @return this instance for fluent method chaining.
      * @see FileReader
      */
-    public AbstractApplication createFileReader(String fileName) {
+    public IOApplication createFileReader(String fileName) {
         return createFileReader(getClass(), fileName);
     }
 
@@ -107,7 +110,7 @@ public abstract class AbstractApplication {
      * @see FileReader
      * @see FileTarget
      */
-    public AbstractApplication createFileReader(Class<?> c, String file) {
+    public IOApplication createFileReader(Class<?> c, String file) {
         if (null != fileReader) {
             fileReader.close();
         }
@@ -122,7 +125,7 @@ public abstract class AbstractApplication {
      * @return this instance for fluent method chaining.
      * @see Scanner
      */
-    public AbstractApplication createInputScanner() {
+    public IOApplication createInputScanner() {
         scanner = new Scanner(System.in);
         return this;
     }
@@ -134,7 +137,7 @@ public abstract class AbstractApplication {
      * @return this instance for fluent method chaining.
      * @see Scanner
      */
-    public AbstractApplication createInputScanner(String content) {
+    public IOApplication createInputScanner(String content) {
         scanner = new Scanner(content);
         return this;
     }
@@ -146,7 +149,7 @@ public abstract class AbstractApplication {
      * @return this instance for fluent method chaining.
      * @see PrintDecorator
      */
-    public AbstractApplication createConsoleWriter() {
+    public IOApplication createConsoleWriter() {
         if (null != printWriter) {
             printWriter.close();
         }
@@ -164,7 +167,7 @@ public abstract class AbstractApplication {
      * @return this instance for fluent method chaining.
      * @see FileWriter
      */
-    public AbstractApplication createFileWriter() {
+    public IOApplication createFileWriter() {
         String fileName = getClass().getSimpleName().toLowerCase() + ".txt";
 
         return createFileWriter(FileTarget.DATA_DIR, fileName);
@@ -179,7 +182,7 @@ public abstract class AbstractApplication {
      * @see FileWriter
      * @see FileTarget
      */
-    public AbstractApplication createFileWriter(String fileName) {
+    public IOApplication createFileWriter(String fileName) {
         return createFileWriter(FileTarget.DATA_DIR, fileName);
     }
 
@@ -197,7 +200,7 @@ public abstract class AbstractApplication {
      * @see FileWriter
      * @see FileTarget
      */
-    public AbstractApplication createFileWriter(FileTarget t, String file) {
+    public IOApplication createFileWriter(FileTarget t, String file) {
         if (null != fileWriter) {
             fileWriter.close();
         }
@@ -213,7 +216,7 @@ public abstract class AbstractApplication {
      * @param content char sequence to be appended to the console output.
      * @return this instance for fluent method chaining.
      */
-    public AbstractApplication append(CharSequence content) {
+    public IOApplication append(CharSequence content) {
         if (null == printWriter) {
             createConsoleWriter();
         }
@@ -227,7 +230,7 @@ public abstract class AbstractApplication {
      * @param content char sequence to be appended to the file output.
      * @return this instance for fluent method chaining.
      */
-    public AbstractApplication appendToFile(CharSequence content) {
+    public IOApplication appendToFile(CharSequence content) {
         if (null == fileWriter) {
             createFileWriter();
         }
@@ -241,7 +244,7 @@ public abstract class AbstractApplication {
      * @param content String to be printed to the console output.
      * @return this instance for fluent method chaining.
      */
-    public AbstractApplication print(String content) {
+    public IOApplication print(String content) {
         if (null == printWriter) {
             createConsoleWriter();
         }
@@ -255,7 +258,7 @@ public abstract class AbstractApplication {
      * @param content String to be printed to the file output.
      * @return this instance for fluent method chaining.
      */
-    public AbstractApplication printToFile(String content) {
+    public IOApplication printToFile(String content) {
         if (null == fileWriter) {
             createFileWriter();
         }
@@ -268,7 +271,7 @@ public abstract class AbstractApplication {
      *
      * @return this instance for fluent method chaining.
      */
-    public AbstractApplication println() {
+    public IOApplication println() {
         if (null == printWriter) {
             createConsoleWriter();
         }
@@ -282,7 +285,7 @@ public abstract class AbstractApplication {
      * @param content String to be printed to the console output.
      * @return this instance for fluent method chaining.
      */
-    public AbstractApplication println(String content) {
+    public IOApplication println(String content) {
         if (null == printWriter) {
             createConsoleWriter();
         }
@@ -295,7 +298,7 @@ public abstract class AbstractApplication {
      *
      * @return this instance for fluent method chaining.
      */
-    public AbstractApplication printlnToFile() {
+    public IOApplication printlnToFile() {
         if (null == fileWriter) {
             createFileWriter();
         }
@@ -309,7 +312,7 @@ public abstract class AbstractApplication {
      * @param content String to be printed to the file output.
      * @return this instance for fluent method chaining.
      */
-    public AbstractApplication printlnToFile(String content) {
+    public IOApplication printlnToFile(String content) {
         if (null == fileWriter) {
             createFileWriter();
         }
@@ -324,7 +327,7 @@ public abstract class AbstractApplication {
      * @param args   arguments referenced by the format specifiers.
      * @return this instance for fluent method chaining.
      */
-    public AbstractApplication printf(String format, Object... args) {
+    public IOApplication printf(String format, Object... args) {
         if (null == printWriter) {
             createConsoleWriter();
         }
@@ -339,7 +342,7 @@ public abstract class AbstractApplication {
      * @param args   arguments referenced by the format specifiers.
      * @return this instance for fluent method chaining.
      */
-    public AbstractApplication printfToFile(String format, Object... args) {
+    public IOApplication printfToFile(String format, Object... args) {
         if (null == fileWriter) {
             createFileWriter();
         }

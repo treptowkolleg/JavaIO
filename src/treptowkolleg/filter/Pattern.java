@@ -14,24 +14,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package treptowkolleg.core;
+package treptowkolleg.filter;
 
-import java.util.regex.Pattern;
-
-public enum MatchPattern {
+public enum Pattern {
 	INTEGER	("-?\\d+"),
 	DOUBLE	("[-+]?(\\d*\\.\\d+|\\d+\\.\\d*)([eE][-+]?\\d+)?"),
 	NUMBER	("[-+]?\\d*\\.?\\d+");
 
 	private final String regex;
-	private final Pattern pattern;
+	private final java.util.regex.Pattern pattern;
 
-	MatchPattern(String regex) {
+	Pattern(String regex) {
 		this.regex = regex;
-		this.pattern = Pattern.compile(regex);
+		this.pattern = java.util.regex.Pattern.compile(regex);
 	}
 
-	public Pattern getPattern() {
+	public java.util.regex.Pattern getPattern() {
 		return pattern;
 	}
 
